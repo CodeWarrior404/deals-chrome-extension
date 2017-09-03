@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener(function(request, sender) {
     if (request.action === 'pageParsingComplete') {
-        updateDisplay(request.source);
+        proccessPageText(request.source);
     }
 });
 
@@ -18,6 +18,14 @@ function onWindowLoad() {
 window.onload = onWindowLoad;
 
 function updateDisplay(displayValue) {
-    var parsedTextDiv = document.querySelector('#parsedTextDiv');
-    parsedTextDiv.innerText = displayValue;
+    $('#parsedTextDiv').text(displayValue);
+}
+
+function proccessPageText(pageTxt) {
+    updateDisplay('Checking for deals...');
+    $.ajax({
+        url: 'https://backflipp.wishabi.com/flipp/items/search?locale=en-us&postal_code=75056&q=printer'
+    }).then(function(data) {
+        $('#parsedTextDiv').text(data);
+    });
 }
