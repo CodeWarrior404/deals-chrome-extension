@@ -41,11 +41,11 @@ function createListOfKeywordsFromPageTxt(pageTxt) {
     var wordArray = pageTxt.split(' ');
     var wordMap = {};
 
-    for (var i = 0; i < wordArray.length; i++) {
-        var word = wordArray[i];
+    $.each(wordArray, function (index, word) {
         if (word.length > 2 && !wordMap[word.toLowerCase()] && !ignoreList[word.toLowerCase()]) {
             wordMap[word.toLowerCase()] = true;
         }
-    }
+    });
+
     return Object.keys(wordMap);
 }
